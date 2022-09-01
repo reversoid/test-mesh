@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private modalService: ModalService) {};
   
   ngOnInit() {
-    this.modalService.openModal();
+    // this.modalService.openModal();
   }
 }

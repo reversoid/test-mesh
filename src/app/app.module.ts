@@ -7,12 +7,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
 import { ModalComponent } from './components/modal/modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ModalComponent
-  ],
+  declarations: [AppComponent, ModalComponent, ProductsPageComponent, ProductComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
