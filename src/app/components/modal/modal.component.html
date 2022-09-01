@@ -1,33 +1,78 @@
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="close()"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="form">
-      <input formControlName="name" type="text" class="form-control mb-2" placeholder="Product name">
-      <textarea formControlName="description" type="text" class="form-control mb-2" placeholder="Product description"></textarea>
-      <input formControlName="price" type="text" class="form-control mb-2" placeholder="Price">
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      *ngIf="type === 'UPDATE'"
-      type="button"
-      class="btn btn-danger"
-      (click)="remove()"
-    >
-      Remove
-    </button>
-    <button
-      type="button"
-      class="btn btn-success"
-      (click)="save()"
-    >
-      Save
-    </button>
-  </div>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="mb-3">
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control"
+        placeholder="Product name"
+        aria-describedby="nameError"
+        (blur)="emitChangeEvent()"
+      />
+      <div
+        *ngIf="errors.name"
+        id="nameError"
+        class="form-text text-danger"
+      >
+        {{ errors.name }}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <textarea
+        formControlName="description"
+        type="text"
+        class="form-control"
+        placeholder="Product description"
+        aria-describedby="descError"
+        (blur)="emitChangeEvent()"
+      ></textarea>
+      <div
+        *ngIf="errors.description"
+        id="descError"
+        class="form-text text-danger"
+      >
+        {{ errors.description }}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <input
+        formControlName="price"
+        type="text"
+        class="form-control mb-2"
+        placeholder="Price"
+        aria-describedby="priceError"
+        (blur)="emitChangeEvent()"
+      />
+      <div *ngIf="errors.price" id="descError" class="form-text text-danger">{{ errors.price }}</div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    *ngIf="type === 'UPDATE'"
+    type="button"
+    class="btn btn-danger"
+    (click)="remove()"
+  >
+    Remove
+  </button>
+  <button
+    type="button"
+    class="btn btn-success"
+    (click)="save()"
+    [disabled]="form.invalid"
+  >
+    Save
+  </button>
+</div>
