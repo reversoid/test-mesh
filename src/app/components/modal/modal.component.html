@@ -18,11 +18,7 @@
         aria-describedby="nameError"
         (blur)="emitChangeEvent()"
       />
-      <div
-        *ngIf="errors.name"
-        id="nameError"
-        class="form-text text-danger"
-      >
+      <div *ngIf="errors.name" id="nameError" class="form-text text-danger">
         {{ errors.name }}
       </div>
     </div>
@@ -54,7 +50,9 @@
         aria-describedby="priceError"
         (blur)="emitChangeEvent()"
       />
-      <div *ngIf="errors.price" id="descError" class="form-text text-danger">{{ errors.price }}</div>
+      <div *ngIf="errors.price" id="descError" class="form-text text-danger">
+        {{ errors.price }}
+      </div>
     </div>
   </form>
 </div>

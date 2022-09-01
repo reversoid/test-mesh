@@ -20,3 +20,8 @@ export const removeProductSuccess = createAction(
   '[Product API] removeProduct',
   props<{ id: number }>()
 );
+
+export const toggleIsLoading = createAction(
+  '[Product API] toggleIsLoading',
+  props<{ to: boolean }>()
+);

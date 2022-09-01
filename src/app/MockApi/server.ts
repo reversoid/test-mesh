@@ -69,7 +69,7 @@ export class BackendInterceptor implements HttpInterceptor {
           body: { message: PRODUCT_ID_NOT_FOUND },
         })
       );
-    return of(new HttpResponse({ status: 200, body: {id} }));
+    return of(new HttpResponse({ status: 200, body: { id } }));
   }
 
   private _handleProducts(req: HttpRequest<any>) {

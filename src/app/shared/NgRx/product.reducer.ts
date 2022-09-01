@@ -4,6 +4,7 @@ import {
   createProductSuccess,
   getProductsSuccess,
   removeProductSuccess,
+  toggleIsLoading,
   updateProductSuccess,
 } from './product.actions';
 
@@ -32,4 +33,7 @@ export const productReducer = createReducer(
   on(updateProductSuccess, (state, { product }) => {
     return { ...state, products: [...state.products].concat(product) };
   }),
+  on(toggleIsLoading, (state, { to }) => {
+    return { ...state, isLoading: to };
+  })
 );

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IProduct } from '../shared/types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
   public getProducts(): IProduct[] {

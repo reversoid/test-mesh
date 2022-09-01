@@ -4,7 +4,7 @@ import { CreateProductDTO } from '../MockApi/types';
 import { IProduct } from '../shared/types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
   constructor(private _http: HttpClient) {}
@@ -14,7 +14,7 @@ export class ProductsService {
   }
 
   public removeProduct(id: number) {
-    return this._http.delete<{id: number}>('http://localhost:4200/products', {
+    return this._http.delete<{ id: number }>('http://localhost:4200/products', {
       body: {
         id,
       },

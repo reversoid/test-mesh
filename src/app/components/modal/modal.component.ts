@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -11,9 +6,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ModalPurpose, ModalService, MODAL_ACTIONS } from 'src/app/services/modal.service';
+import {
+  ModalPurpose,
+  ModalService,
+  MODAL_ACTIONS,
+} from 'src/app/services/modal.service';
 import { IProduct } from 'src/app/shared/types';
-import { EMPTY_ERRORS_STATE, EMPTY_PRODUCT, ERRORS, TITLES } from './utils/constants';
+import {
+  EMPTY_ERRORS_STATE,
+  EMPTY_PRODUCT,
+  ERRORS,
+  TITLES,
+} from './utils/constants';
 import { IErrors, ProductFormType } from './utils/types';
 import { greaterZeroValidator, numberValidator } from './utils/validators';
 
@@ -78,7 +82,7 @@ export class ModalComponent implements OnInit, OnDestroy {
       const hasErrorsAndTouched = errors && (field.touched || field.dirty);
       if (hasErrorsAndTouched) {
         console.log(errors);
-        
+
         if (errors['required']) this.errors.price = ERRORS.REQUIRED;
         else if (errors['pattern']) this.errors.price = ERRORS.NUMERIC;
         else if (errors['greaterZero'] === false)

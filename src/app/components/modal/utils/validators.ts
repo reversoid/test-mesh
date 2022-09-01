@@ -1,4 +1,4 @@
-import { AbstractControl, Validators } from "@angular/forms";
+import { AbstractControl, Validators } from '@angular/forms';
 
 export function greaterZeroValidator(control: AbstractControl) {
   const greaterZero = Number(control.value) > 0;

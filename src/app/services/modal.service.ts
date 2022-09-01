@@ -5,18 +5,20 @@ import { ModalComponent } from '../components/modal/modal.component';
 import { IProduct } from '../shared/types';
 
 export const enum MODAL_ACTIONS {
-  SAVE, REMOVE, CLOSE
-};
+  SAVE,
+  REMOVE,
+  CLOSE,
+}
 
 interface IActionPayload {
-  actionType: MODAL_ACTIONS,
-  payload: IProduct,
+  actionType: MODAL_ACTIONS;
+  payload: IProduct;
 }
 
 export type ModalPurpose = 'ADD' | 'UPDATE';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModalService {
   constructor(private _modal: NgbModal) {}
@@ -35,7 +37,7 @@ export class ModalService {
   }
 
   public closeModal(actionType: MODAL_ACTIONS, payload: IProduct) {
-    this.modalRef?.close({actionType, payload});
+    this.modalRef?.close({ actionType, payload });
   }
 
   public dismissModal() {
@@ -43,8 +45,10 @@ export class ModalService {
   }
 
   private initSubscription() {
-    this.modalRef?.closed.subscribe(({actionType, payload}: IActionPayload) => {
-      console.log(actionType, payload);
-    });
+    this.modalRef?.closed.subscribe(
+      ({ actionType, payload }: IActionPayload) => {
+        console.log(actionType, payload);
+      }
+    );
   }
 }
