@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalService, MODAL_ACTIONS } from 'src/app/services/modal.service';
 import { IProduct } from 'src/app/shared/types';
 
@@ -13,6 +13,14 @@ const EMPTY_PRODUCT: IProduct = {
   description: '',
   name: '',
   price: -1,
+}
+
+function greaterZeroValidator(control: AbstractControl) {
+  const greaterZero = Number(control.value) > 0;
+  if (greaterZero) return null;
+  return {
+    greaterZero: true,
+  };
 }
 
 @Component({
@@ -29,20 +37,16 @@ export class ModalComponent implements OnInit {
 
   public title = '';
 
-  public form: FormGroup = this._fb.group({
-    name: [''],
-    description: [''],
-    price: [''],
-  });
+  public form!: FormGroup;
 
   ngOnInit() {
     this.title = TITLES[this.type];
     this.form = this._fb.group({
-      name: [this.product.name, Validators.required],
-      description: [this.product.description, Validators.required],
-      price: [this.product.price === -1 ? '' : this.product.price, Validators.required]
+      name: [this.product.name, [Validators.required]],
+      description: [this.product.description, [Validators.required]],
+      price: ['hie', [Validators.required, greaterZeroValidator]]
     });
-    // this.form.valueChanges.subscribe((e) => {console.log(e); this.form?.errors})
+    this.form.valueChanges.subscribe((e) => {console.log(e, this.form.invalid) })
   }
 
   public close() {
