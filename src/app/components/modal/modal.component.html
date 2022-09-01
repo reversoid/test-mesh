@@ -8,10 +8,10 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form>
-      <input type="text" class="form-control mb-2" placeholder="Product name">
-      <textarea type="text" class="form-control mb-2" placeholder="Product description"></textarea>
-      <input type="number" class="form-control mb-2" placeholder="Price">
+    <form [formGroup]="form">
+      <input formControlName="name" type="text" class="form-control mb-2" placeholder="Product name">
+      <textarea formControlName="description" type="text" class="form-control mb-2" placeholder="Product description"></textarea>
+      <input formControlName="price" type="number" class="form-control mb-2" placeholder="Price">
     </form>
   </div>
   <div class="modal-footer">

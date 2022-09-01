@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ModalService, MODAL_ACTIONS } from 'src/app/services/modal.service';
 import { IProduct } from 'src/app/shared/types';
 
@@ -20,7 +21,7 @@ const EMPTY_PRODUCT: IProduct = {
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
-  constructor(public modalService: ModalService) {}
+  constructor(public modalService: ModalService, private _fb: FormBuilder) {}
 
   @Input() type: 'ADD' | 'UPDATE' = 'ADD';
 
@@ -28,8 +29,20 @@ export class ModalComponent implements OnInit {
 
   public title = '';
 
+  public form: FormGroup = this._fb.group({
+    name: [''],
+    description: [''],
+    price: [''],
+  });
+
   ngOnInit() {
     this.title = TITLES[this.type];
+    this.form = this._fb.group({
+      name: [this.product.name, Validators.required],
+      description: [this.product.description, Validators.required],
+      price: [this.product.price === -1 ? '' : this.product.price, Validators.required]
+    });
+    // this.form.valueChanges.subscribe((e) => {console.log(e); this.form?.errors})
   }
 
   public close() {

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
 import { ModalComponent } from './components/modal/modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ModalComponent } from './components/modal/modal.component';
     AppRoutingModule,
     NgbModule,
     StoreModule.forRoot({}, {}),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
