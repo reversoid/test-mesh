@@ -13,6 +13,8 @@ interface IActionPayload {
   payload: IProduct,
 }
 
+export type ModalPurpose = 'ADD' | 'UPDATE';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,9 +27,10 @@ export class ModalService {
 
   private closeSubscription$?: Observable<IActionPayload>;
 
-  public openModal(product: IProduct) {
+  public openModal(product: IProduct, modalPurpose: ModalPurpose) {
     this.modalRef = this._modal.open(this.modalComponent);
     this.modalRef.componentInstance.product = product;
+    this.modalRef.componentInstance.type = modalPurpose;
     if (!this.closeSubscription$) this.initSubscription();
   }
 

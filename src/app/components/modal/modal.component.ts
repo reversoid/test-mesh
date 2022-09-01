@@ -11,7 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ModalService, MODAL_ACTIONS } from 'src/app/services/modal.service';
+import { ModalPurpose, ModalService, MODAL_ACTIONS } from 'src/app/services/modal.service';
 import { IProduct } from 'src/app/shared/types';
 import { EMPTY_ERRORS_STATE, EMPTY_PRODUCT, ERRORS, TITLES } from './utils/constants';
 import { IErrors, ProductFormType } from './utils/types';
@@ -25,7 +25,7 @@ import { greaterZeroValidator, numberValidator } from './utils/validators';
 export class ModalComponent implements OnInit, OnDestroy {
   constructor(public modalService: ModalService, private _fb: FormBuilder) {}
 
-  @Input() type: 'ADD' | 'UPDATE' = 'ADD';
+  @Input() type: ModalPurpose = 'ADD';
 
   @Input() product: IProduct = EMPTY_PRODUCT;
 
