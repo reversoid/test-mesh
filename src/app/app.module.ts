@@ -9,6 +9,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductComponent } from './components/product/product.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent, ModalComponent, ProductsPageComponent, ProductComponent],
@@ -18,6 +19,7 @@ import { ProductComponent } from './components/product/product.component';
     NgbModule,
     StoreModule.forRoot({}, {}),
     ReactiveFormsModule,
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],

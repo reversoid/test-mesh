@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpEvent,
@@ -37,7 +37,7 @@ export class BackendInterceptor implements HttpInterceptor {
     return of(new HttpResponse({ status: 201, body: { product: newProduct } }));
   }
 
-  private _handleProductPATCH(id: number, newProductData: CreateProductDTO) {
+  private _handleProductPUT(id: number, newProductData: CreateProductDTO) {
     const products = this.storageService.getProducts();
     let product = products.find((p) => p.id === id);
     if (product === undefined)
@@ -76,8 +76,8 @@ export class BackendInterceptor implements HttpInterceptor {
     if (req.method === 'GET') return this._handleProductGET();
     if (req.method === 'POST')
       return this._handleProductPOST(req.body.productData);
-    if (req.method === 'PATCH')
-      return this._handleProductPATCH(req.body.id, req.body.newProductData);
+    if (req.method === 'PUT')
+      return this._handleProductPUT(req.body.id, req.body.newProductData);
     if (req.method === 'DELETE') return this._handleProductDELETE(req.body.id);
     return of(new HttpResponse({ status: 404 }));
   }
