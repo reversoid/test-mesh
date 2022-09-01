@@ -25,8 +25,9 @@ export class ModalService {
 
   private closeSubscription$?: Observable<IActionPayload>;
 
-  public openModal() {
+  public openModal(product: IProduct) {
     this.modalRef = this._modal.open(this.modalComponent);
+    this.modalRef.componentInstance.product = product;
     if (!this.closeSubscription$) this.initSubscription();
   }
 
