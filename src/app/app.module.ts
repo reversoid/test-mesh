@@ -10,14 +10,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductComponent } from './components/product/product.component';
 import { EffectsModule } from '@ngrx/effects';
+import { productReducer } from './shared/NgRx/product.reducer';
 
 @NgModule({
-  declarations: [AppComponent, ModalComponent, ProductsPageComponent, ProductComponent],
+  declarations: [
+    AppComponent,
+    ModalComponent,
+    ProductsPageComponent,
+    ProductComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ product: productReducer }),
     ReactiveFormsModule,
     EffectsModule.forRoot([]),
   ],

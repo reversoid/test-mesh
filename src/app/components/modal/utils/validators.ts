@@ -9,5 +9,5 @@ export function greaterZeroValidator(control: AbstractControl) {
 }
 
 export function numberValidator() {
-  return Validators.pattern(/[0-9.]+/);
+  return Validators.pattern(/^[0-9.]+$/);
 }
