@@ -1,0 +1,33 @@
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <input type="text" class="form-control mb-2" placeholder="Product name">
+      <textarea type="text" class="form-control mb-2" placeholder="Product description"></textarea>
+      <input type="number" class="form-control mb-2" placeholder="Price">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      *ngIf="type === 'UPDATE'"
+      type="button"
+      class="btn btn-danger"
+      (click)="remove()"
+    >
+      Remove
+    </button>
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="save()"
+    >
+      Save
+    </button>
+  </div>
