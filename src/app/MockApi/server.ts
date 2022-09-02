@@ -112,7 +112,7 @@ export class BackendInterceptor implements HttpInterceptor {
 
     return this._handleProducts(req).pipe(
       materialize(),
-      delay(500),
+      delay(700),
       dematerialize(),
       catchError((err) => throwError(() => err.error)));
   }

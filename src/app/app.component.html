@@ -1,11 +1,10 @@
 <ngb-progressbar
-  *ngIf="isLoading"
   class="position-fixed top-0 start-0 w-100"
-  type="info"
-  [value]="100"
+  type="secondary"
+  [value]="isLoading ? 100 : 0"
   height=".5rem"
-  [animated]="isLoading"
-  [striped]="isLoading"
+  [animated]="isLoading!"
+  [striped]="isLoading!"
 ></ngb-progressbar>
 <div class="container-xl py-2">
   <app-products-page></app-products-page>
