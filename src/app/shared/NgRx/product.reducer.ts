@@ -1,36 +1,36 @@
 import { createReducer, on } from '@ngrx/store';
 import { IProduct } from '../types';
 import {
-  createProductSuccess,
-  getProductsSuccess,
-  removeProductSuccess,
   toggleIsLoading,
-  updateProductSuccess,
+  SUCCESS_ACTIONS,
+  FAILURE_ACTIONS,
 } from './product.actions';
 
 export interface ProductState {
   products: IProduct[];
   isLoading: boolean;
+  errorMessage: string;
 }
 
 export const initialState: ProductState = {
   isLoading: false,
   products: [],
+  errorMessage: '',
 };
 
 export const productReducer = createReducer(
   initialState,
-  on(getProductsSuccess, (state, { products }) => ({ ...state, products })),
-  on(removeProductSuccess, (state, { id }) => {
+  on(SUCCESS_ACTIONS.getProducts, (state, { products }) => ({ ...state, products })),
+  on(SUCCESS_ACTIONS.removeProduct, (state, { id }) => {
     const newProductsState = state.products.filter(
       (product) => product.id !== id
     );
     return { ...state, products: newProductsState };
   }),
-  on(createProductSuccess, (state, { product }) => {
+  on(SUCCESS_ACTIONS.createProduct, (state, { product }) => {
     return { ...state, products: state.products.concat(product) };
   }),
-  on(updateProductSuccess, (state, { product }) => {
+  on(SUCCESS_ACTIONS.updateProduct, (state, { product }) => {
     const newArr = [...state.products];
     let index = newArr.findIndex((p) => p.id === product.id);
     if (index === -1) return state;

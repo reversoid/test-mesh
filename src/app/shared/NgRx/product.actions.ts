@@ -1,25 +1,49 @@
 import { createAction, props } from '@ngrx/store';
 import { IProduct } from '../types';
 
-export const getProductsSuccess = createAction(
-  '[Product API] getProductsSuccess',
-  props<{ products: IProduct[] }>()
-);
+export const SUCCESS_ACTIONS = {
+  createProduct: createAction(
+    '[Product API] createProductSuccess',
+    props<{ product: IProduct }>()
+  ),
 
-export const createProductSuccess = createAction(
-  '[Product API] createProductSuccess',
-  props<{ product: IProduct }>()
-);
+  getProducts: createAction(
+    '[Product API] getProductsSuccess',
+    props<{ products: IProduct[] }>()
+  ),
 
-export const updateProductSuccess = createAction(
-  '[Product API] updateProductSuccess',
-  props<{ product: IProduct }>()
-);
+  updateProduct: createAction(
+    '[Product API] updateProductSuccess',
+    props<{ product: IProduct }>()
+  ),
 
-export const removeProductSuccess = createAction(
-  '[Product API] removeProductSuccess',
-  props<{ id: number }>()
-);
+  removeProduct: createAction(
+    '[Product API] removeProductSuccess',
+    props<{ id: number }>()
+  ),
+};
+
+export const FAILURE_ACTIONS = {
+  createProducts: createAction(
+    '[Product API] createProductFailure',
+    props<{ message: string }>()
+  ),
+
+  getProducts: createAction(
+    '[Product API] getProductsFailure',
+    props<{ message: string }>()
+  ),
+
+  updateProduct: createAction(
+    '[Product API] updateProductFailure',
+    props<{ message: string }>()
+  ),
+
+  removeProduct: createAction(
+    '[Product API] removeProductFailure',
+    props<{ message: string }>()
+  ),
+};
 
 export const toggleIsLoading = createAction(
   '[Product API] toggleIsLoading',
