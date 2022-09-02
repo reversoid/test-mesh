@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getProducts } from 'src/app/shared/NgRx/product.actions';
-import { selectErrorMessage, selectIsLoading, selectProducts } from 'src/app/shared/NgRx/product.selectors';
+import { selectIsLoading, selectProducts } from 'src/app/shared/NgRx/product.selectors';
 import { IProduct } from 'src/app/shared/types';
 
 @Component({
@@ -10,19 +10,13 @@ import { IProduct } from 'src/app/shared/types';
   styleUrls: ['./products-page.component.scss'],
 })
 export class ProductsPageComponent implements OnInit {
-  public products: IProduct[] = [
-    {
-      id: 1,
-      description: 'hmm there is some descripton',
-      name: 'Iphone max',
-      price: 999,
-    },
-  ];
+  public products: IProduct[] = [];
+
+  public isLoading?: boolean;
 
   ngOnInit() {
-    this.store.select(selectProducts).subscribe(e => console.log('this is products', e));
-    this.store.select(selectErrorMessage).subscribe(e => console.log('this is error', e));
-
+    this.store.select(selectProducts).subscribe(products => this.products = products);
+    this.store.select(selectIsLoading).subscribe(isLoading => this.isLoading = isLoading);
     this.store.dispatch(getProducts());
   }
 
