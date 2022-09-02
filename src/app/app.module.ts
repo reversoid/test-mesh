@@ -11,6 +11,9 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductComponent } from './components/product/product.component';
 import { EffectsModule } from '@ngrx/effects';
 import { productReducer } from './shared/NgRx/product.reducer';
+import { ProductEffects } from './shared/NgRx/product.effects';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BackendInterceptor } from './MockApi/server';
 
 @NgModule({
   declarations: [
@@ -25,9 +28,12 @@ import { productReducer } from './shared/NgRx/product.reducer';
     NgbModule,
     StoreModule.forRoot({ product: productReducer }),
     ReactiveFormsModule,
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([ProductEffects]),
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

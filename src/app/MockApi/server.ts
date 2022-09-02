@@ -72,7 +72,7 @@ export class BackendInterceptor implements HttpInterceptor {
     return of(new HttpResponse({ status: 200, body: { id } }));
   }
 
-  private _handleProducts(req: HttpRequest<any>) {
+  private _handleProducts(req: HttpRequest<any>) {    
     if (req.method === 'GET') return this._handleProductGET();
     if (req.method === 'POST')
       return this._handleProductPOST(req.body.productData);

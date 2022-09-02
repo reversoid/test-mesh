@@ -28,12 +28,17 @@ export const productReducer = createReducer(
     return { ...state, products: newProductsState };
   }),
   on(createProductSuccess, (state, { product }) => {
-    return { ...state, products: [...state.products].concat(product) };
+    return { ...state, products: state.products.concat(product) };
   }),
   on(updateProductSuccess, (state, { product }) => {
-    return { ...state, products: [...state.products].concat(product) };
+    const newArr = [...state.products];
+    let index = newArr.findIndex((p) => p.id === product.id);
+    if (index === -1) return state;
+    newArr[index] = product;
+    return { ...state, products: newArr };
   }),
   on(toggleIsLoading, (state, { to }) => {
+    console.log(`hey isLoading is changed to ${to}`);
     return { ...state, isLoading: to };
   })
 );
