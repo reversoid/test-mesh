@@ -7,8 +7,8 @@ import { createProduct } from '../shared/NgRx/product.actions';
 import { IProduct } from '../shared/types';
 
 export const enum MODAL_ACTIONS {
-  SAVE,
-  REMOVE,
+  EDIT,
+  CREATE,
   CLOSE,
 }
 
@@ -48,9 +48,9 @@ export class ModalService {
   private initSubscription() {
     this.modalRef?.closed.subscribe(
       ({ actionType, payload }: IActionPayload) => {
-        if (actionType === MODAL_ACTIONS.SAVE) {
+        if (actionType === MODAL_ACTIONS.CREATE) {
           this.store.dispatch(createProduct({product: payload}));
-        }        
+        }
       }
     );
   }

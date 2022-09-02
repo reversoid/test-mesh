@@ -11,6 +11,7 @@ import {
 } from 'src/app/services/modal.service';
 import { IProduct } from 'src/app/shared/types';
 import {
+  BTN_TEXT,
   EMPTY_ERRORS_STATE,
   EMPTY_PRODUCT,
   ERRORS,
@@ -31,22 +32,30 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   public title = '';
 
+  public buttonText = '';
+
   public form!: FormGroup;
 
   public errors: IErrors = EMPTY_ERRORS_STATE;
 
   private _ngDestroySubscription$ = new Subject<boolean>();
 
-  private _isEmptyProduct() {
+  private _forCreateNewProduct() {
     return this.product.id === -1;
   }
 
   private _getTitle() {
-    return this._isEmptyProduct() ? TITLES.ADD : TITLES.UPDATE;
+    return this._forCreateNewProduct() ? TITLES.ADD : TITLES.UPDATE;
+  }
+
+  private _getButtonText() {
+    return this._forCreateNewProduct() ? BTN_TEXT.ADD : BTN_TEXT.UPDATE;
   }
 
   ngOnInit() {
     this.title = this._getTitle();
+    this.buttonText = this._getButtonText();
+
     this.form = this._fb.group({
       name: [this.product.name, [Validators.required]],
       description: [this.product.description, [Validators.required]],
@@ -104,14 +113,15 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.modalService.dismissModal();
   }
 
-  public save() {
+  public handleSubmit() {
     const product: IProduct = {
       ...this.product,
       description: this.form.controls['description'].value,
       name: this.form.controls['name'].value,
       price: this.form.controls['price'].value,
     };
-    this.modalService.closeModal(MODAL_ACTIONS.SAVE, product);
+    const action = this._forCreateNewProduct() ? MODAL_ACTIONS.CREATE : MODAL_ACTIONS.EDIT;
+    this.modalService.closeModal(action, product);
   }
 
   ngOnDestroy(): void {

@@ -6,6 +6,11 @@ export const TITLES = {
   UPDATE: 'Edit product',
 };
 
+export const BTN_TEXT = {
+  ADD: 'Add',
+  UPDATE: 'Edit',
+};
+
 export const ERRORS = {
   REQUIRED: 'This field is required',
   GREATER_ZERO: 'This field must be above 0',
