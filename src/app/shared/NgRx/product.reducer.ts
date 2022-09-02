@@ -42,7 +42,6 @@ export const productReducer = createReducer(
     return { ...state, products: arr };
   }),
   on(toggleIsLoading, (state, { to }) => {
-    console.log(`hey isLoading is changed to ${to}`);
     return { ...state, isLoading: to };
   }),
   on(FAILURE_ACTION, (state, { message }) => {
