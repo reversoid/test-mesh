@@ -20,7 +20,10 @@ export const initialState: ProductState = {
 
 export const productReducer = createReducer(
   initialState,
-  on(SUCCESS_ACTIONS.getProducts, (state, { products }) => ({ ...state, products })),
+  on(SUCCESS_ACTIONS.getProducts, (state, { products }) => ({
+    ...state,
+    products,
+  })),
   on(SUCCESS_ACTIONS.removeProduct, (state, { id }) => {
     const newProductsState = state.products.filter(
       (product) => product.id !== id
@@ -31,11 +34,12 @@ export const productReducer = createReducer(
     return { ...state, products: state.products.concat(product) };
   }),
   on(SUCCESS_ACTIONS.updateProduct, (state, { product }) => {
-    const newArr = [...state.products];
-    let index = newArr.findIndex((p) => p.id === product.id);
+    const arr = [...state.products];
+
+    let index = arr.findIndex((p) => p.id === product.id);
     if (index === -1) return state;
-    newArr[index] = product;
-    return { ...state, products: newArr };
+    arr.splice(index, 1, product);
+    return { ...state, products: arr };
   }),
   on(toggleIsLoading, (state, { to }) => {
     console.log(`hey isLoading is changed to ${to}`);
@@ -43,5 +47,5 @@ export const productReducer = createReducer(
   }),
   on(FAILURE_ACTION, (state, { message }) => {
     return { ...state, errorMessage: message };
-  }),
+  })
 );

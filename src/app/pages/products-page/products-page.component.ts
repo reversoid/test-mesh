@@ -2,7 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ModalService } from 'src/app/services/modal.service';
 import { getProducts } from 'src/app/shared/NgRx/product.actions';
-import { selectIsLoading, selectProducts } from 'src/app/shared/NgRx/product.selectors';
+import {
+  selectIsLoading,
+  selectProducts,
+} from 'src/app/shared/NgRx/product.selectors';
 import { IProduct } from 'src/app/shared/types';
 
 @Component({
@@ -16,8 +19,12 @@ export class ProductsPageComponent implements OnInit {
   public isLoading?: boolean;
 
   ngOnInit() {
-    this.store.select(selectProducts).subscribe(products => this.products = products);
-    this.store.select(selectIsLoading).subscribe(isLoading => this.isLoading = isLoading);
+    this.store
+      .select(selectProducts)
+      .subscribe((products) => (this.products = products));
+    this.store
+      .select(selectIsLoading)
+      .subscribe((isLoading) => (this.isLoading = isLoading));
     this.store.dispatch(getProducts());
   }
 
@@ -25,5 +32,5 @@ export class ProductsPageComponent implements OnInit {
     this.modalService.openModal();
   }
 
-  constructor (private store: Store, private modalService: ModalService) {}
+  constructor(private store: Store, private modalService: ModalService) {}
 }

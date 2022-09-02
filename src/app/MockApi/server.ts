@@ -7,7 +7,15 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, delay, dematerialize, map, materialize, Observable, of, throwError, timeout } from 'rxjs';
+import {
+  catchError,
+  delay,
+  dematerialize,
+  materialize,
+  Observable,
+  of,
+  throwError,
+} from 'rxjs';
 import { StorageService } from './storage.service';
 import { CreateProductDTO } from './types';
 
@@ -24,17 +32,7 @@ const ALLOWED_METHODS = ['POST', 'GET', 'PUT', 'DELETE'];
 export class BackendInterceptor implements HttpInterceptor {
   constructor(private storageService: StorageService) {}
 
-  private HTTP_METHODS_AND_FUNCTIONS = {
-    'GET': this._handleProductGET,
-    'POST': this._handleProductPOST,
-    'PUT': this._handleProductPUT,
-    'DELETE': this._handleProductDELETE,
-  };
-
   private _handleProductGET() {
-    // return throwError(
-    //   () => new HttpErrorResponse({ status: 500, error: ERRORS.SERVER_ERROR })
-    // );
     const products = this.storageService.getProducts();
     return of(new HttpResponse({ status: 200, body: { products } }));
   }
@@ -57,8 +55,8 @@ export class BackendInterceptor implements HttpInterceptor {
 
   private _handleProductPUT(id: number, newProductData: CreateProductDTO) {
     const products = this.storageService.getProducts();
-    let product = products.find((p) => p.id === id);
-    if (product === undefined) {
+    let index = products.findIndex((p) => p.id === id);
+    if (index === -1) {
       return throwError(
         () =>
           new HttpErrorResponse({
@@ -67,14 +65,13 @@ export class BackendInterceptor implements HttpInterceptor {
           })
       );
     }
-
-    product.description = newProductData.description;
-    product.name = newProductData.name;
-    product.price = newProductData.price;
-
+    const editedProduct = { id, ...newProductData };
+    products.splice(index, 1, editedProduct);
     this.storageService.setProducts(products);
 
-    return of(new HttpResponse({ status: 200, body: { product } }));
+    return of(
+      new HttpResponse({ status: 200, body: { product: editedProduct } })
+    );
   }
 
   private _handleProductDELETE(id: number) {
@@ -88,6 +85,8 @@ export class BackendInterceptor implements HttpInterceptor {
             error: ERRORS.PRODUCT_ID_NOT_FOUND,
           })
       );
+    products.splice(productIndex, 1);
+    this.storageService.setProducts(products);
     return of(new HttpResponse({ status: 200, body: { id } }));
   }
 
@@ -105,15 +104,23 @@ export class BackendInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.url !== 'http://localhost:4200/products' || !ALLOWED_METHODS.includes(req.method)) return next.handle(req).pipe(catchError((errObj) => {
-      if (errObj.status === 404) return throwError(() => ERRORS.WRONG_METHOD);
-      return throwError(() => ERRORS.UNKNOWN_ERROR);
-    }));
+    if (
+      req.url !== 'http://localhost:4200/products' ||
+      !ALLOWED_METHODS.includes(req.method)
+    )
+      return next.handle(req).pipe(
+        catchError((errObj) => {
+          if (errObj.status === 404)
+            return throwError(() => ERRORS.WRONG_METHOD);
+          return throwError(() => ERRORS.UNKNOWN_ERROR);
+        })
+      );
 
     return this._handleProducts(req).pipe(
       materialize(),
       delay(700),
       dematerialize(),
-      catchError((err) => throwError(() => err.error)));
+      catchError((err) => throwError(() => err.error))
+    );
   }
 }

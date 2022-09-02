@@ -10,7 +10,7 @@
       <span>{{ product.price }} $</span>
     </div>
     <div>
-      <button class="btn btn-danger me-1">Remove</button>
+      <button (click)="remove()" class="btn btn-danger me-1">Remove</button>
       <button (click)="openModal()" class="btn btn-primary">Edit</button>
     </div>
   </div>

@@ -70,7 +70,7 @@ export class ProductEffects {
   updateProduct$ = createEffect(() => {
     return this.actions$.pipe(ofType(updateProduct)).pipe(
       mergeMap((payload) => {
-        return this.productsService.createProduct(payload.product).pipe(
+        return this.productsService.updateProduct(payload.product).pipe(
           map((product) => {
             return SUCCESS_ACTIONS.updateProduct({ product });
           }),
@@ -81,11 +81,11 @@ export class ProductEffects {
   });
 
   removeProduct$ = createEffect(() => {
-    return this.actions$.pipe(ofType(updateProduct)).pipe(
+    return this.actions$.pipe(ofType(removeProduct)).pipe(
       mergeMap((payload) => {
-        return this.productsService.createProduct(payload.product).pipe(
-          map((product) => {
-            return SUCCESS_ACTIONS.removeProduct({ id: product.id });
+        return this.productsService.removeProduct(payload.id).pipe(
+          map((id) => {
+            return SUCCESS_ACTIONS.removeProduct({ id });
           }),
           catchError((error: string) => of(FAILURE_ACTION({ message: error })))
         );

@@ -3,7 +3,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ModalComponent } from '../components/modal/modal.component';
-import { createProduct } from '../shared/NgRx/product.actions';
+import { createProduct, updateProduct } from '../shared/NgRx/product.actions';
 import { IProduct } from '../shared/types';
 
 export const enum MODAL_ACTIONS {
@@ -50,6 +50,8 @@ export class ModalService {
       ({ actionType, payload }: IActionPayload) => {
         if (actionType === MODAL_ACTIONS.CREATE) {
           this.store.dispatch(createProduct({product: payload}));
+        } else if (actionType === MODAL_ACTIONS.EDIT) {
+          this.store.dispatch(updateProduct({product: payload}))
         }
       }
     );

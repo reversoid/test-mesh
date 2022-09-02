@@ -94,8 +94,6 @@ export class ModalComponent implements OnInit, OnDestroy {
       const errors = field.errors;
       const hasErrorsAndTouched = errors && (field.touched || field.dirty);
       if (hasErrorsAndTouched) {
-        console.log(errors);
-
         if (errors['required']) this.errors.price = ERRORS.REQUIRED;
         else if (errors['pattern']) this.errors.price = ERRORS.NUMERIC;
         else if (errors['greaterZero'] === false)
