@@ -7,7 +7,7 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { catchError, delay, dematerialize, map, materialize, Observable, of, throwError, timeout } from 'rxjs';
 import { StorageService } from './storage.service';
 import { CreateProductDTO } from './types';
 
@@ -32,9 +32,9 @@ export class BackendInterceptor implements HttpInterceptor {
   };
 
   private _handleProductGET() {
-    return throwError(
-      () => new HttpErrorResponse({ status: 500, error: ERRORS.SERVER_ERROR })
-    );
+    // return throwError(
+    //   () => new HttpErrorResponse({ status: 500, error: ERRORS.SERVER_ERROR })
+    // );
     const products = this.storageService.getProducts();
     return of(new HttpResponse({ status: 200, body: { products } }));
   }
@@ -110,6 +110,10 @@ export class BackendInterceptor implements HttpInterceptor {
       return throwError(() => ERRORS.UNKNOWN_ERROR);
     }));
 
-    return this._handleProducts(req).pipe(catchError((err) => throwError(() => err.error)));
+    return this._handleProducts(req).pipe(
+      materialize(),
+      delay(500),
+      dematerialize(),
+      catchError((err) => throwError(() => err.error)));
   }
 }
