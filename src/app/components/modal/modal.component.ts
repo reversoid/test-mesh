@@ -1,13 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import {
-  ModalPurpose,
   ModalService,
   MODAL_ACTIONS,
 } from 'src/app/services/modal.service';
@@ -29,8 +27,6 @@ import { greaterZeroValidator, numberValidator } from './utils/validators';
 export class ModalComponent implements OnInit, OnDestroy {
   constructor(public modalService: ModalService, private _fb: FormBuilder) {}
 
-  @Input() type: ModalPurpose = 'ADD';
-
   @Input() product: IProduct = EMPTY_PRODUCT;
 
   public title = '';
@@ -41,8 +37,16 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   private _ngDestroySubscription$ = new Subject<boolean>();
 
+  private _isEmptyProduct() {
+    return this.product.id === -1;
+  }
+
+  private _getTitle() {
+    return this._isEmptyProduct() ? TITLES.ADD : TITLES.UPDATE;
+  }
+
   ngOnInit() {
-    this.title = TITLES[this.type];
+    this.title = this._getTitle();
     this.form = this._fb.group({
       name: [this.product.name, [Validators.required]],
       description: [this.product.description, [Validators.required]],
@@ -98,10 +102,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   public close() {
     this.modalService.dismissModal();
-  }
-
-  public remove() {
-    this.modalService.closeModal(MODAL_ACTIONS.REMOVE, this.product);
   }
 
   public save() {

@@ -1,5 +1,10 @@
 <h1 class="text-center">Products list</h1>
 
+<div class="d-flex py-2 pb-3">
+  <button class="btn btn-primary me-2 btn-sm" (click)="openProductModal()">Add product</button>
+  <button class="btn btn-outline-primary btn-sm">Load mock data</button>
+</div>
+
 <div>
   <app-product
     *ngFor="let product of products"

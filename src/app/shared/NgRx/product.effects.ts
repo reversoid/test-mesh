@@ -45,4 +45,43 @@ export class ProductEffects {
       })
     );
   });
+
+  createProduct$ = createEffect(() => {
+    return this.actions$.pipe(ofType(createProduct)).pipe(
+      mergeMap((payload) => {
+        return this.productsService.createProduct(payload.product).pipe(
+          map((product) => {
+            return SUCCESS_ACTIONS.createProduct({ product });
+          }),
+          catchError((error: string) => of(FAILURE_ACTION({message: error}))),
+        );
+      })
+    );
+  });
+
+  updateProduct$ = createEffect(() => {
+    return this.actions$.pipe(ofType(updateProduct)).pipe(
+      mergeMap((payload) => {
+        return this.productsService.createProduct(payload.product).pipe(
+          map((product) => {
+            return SUCCESS_ACTIONS.updateProduct({ product });
+          }),
+          catchError((error: string) => of(FAILURE_ACTION({message: error}))),
+        );
+      })
+    );
+  });
+
+  removeProduct$ = createEffect(() => {
+    return this.actions$.pipe(ofType(updateProduct)).pipe(
+      mergeMap((payload) => {
+        return this.productsService.createProduct(payload.product).pipe(
+          map((product) => {
+            return SUCCESS_ACTIONS.removeProduct({ id: product.id });
+          }),
+          catchError((error: string) => of(FAILURE_ACTION({message: error}))),
+        );
+      })
+    );
+  });
 }

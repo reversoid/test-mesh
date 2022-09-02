@@ -1,7 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ModalComponent } from '../components/modal/modal.component';
+import { createProduct } from '../shared/NgRx/product.actions';
 import { IProduct } from '../shared/types';
 
 export const enum MODAL_ACTIONS {
@@ -21,7 +23,7 @@ export type ModalPurpose = 'ADD' | 'UPDATE';
   providedIn: 'root',
 })
 export class ModalService {
-  constructor(private _modal: NgbModal) {}
+  constructor(private _modal: NgbModal, private store: Store) {}
 
   private modalRef?: NgbModalRef;
 
@@ -29,10 +31,9 @@ export class ModalService {
 
   private closeSubscription$?: Observable<IActionPayload>;
 
-  public openModal(product: IProduct, modalPurpose: ModalPurpose) {
+  public openModal(product?: IProduct) {
     this.modalRef = this._modal.open(this.modalComponent);
-    this.modalRef.componentInstance.product = product;
-    this.modalRef.componentInstance.type = modalPurpose;
+    if (product) this.modalRef.componentInstance.product = product;
     if (!this.closeSubscription$) this.initSubscription();
   }
 
@@ -47,7 +48,9 @@ export class ModalService {
   private initSubscription() {
     this.modalRef?.closed.subscribe(
       ({ actionType, payload }: IActionPayload) => {
-        console.log(actionType, payload);
+        if (actionType === MODAL_ACTIONS.SAVE) {
+          this.store.dispatch(createProduct({product: payload}));
+        }        
       }
     );
   }

@@ -13,6 +13,6 @@ export class ProductComponent {
   @Input() product!: IProduct;
 
   public openModal() {
-    this.modalService.openModal(this.product, 'UPDATE');
+    this.modalService.openModal(this.product);
   }
 }

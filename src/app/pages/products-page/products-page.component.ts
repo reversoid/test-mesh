@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { ModalService } from 'src/app/services/modal.service';
 import { getProducts } from 'src/app/shared/NgRx/product.actions';
 import { selectIsLoading, selectProducts } from 'src/app/shared/NgRx/product.selectors';
 import { IProduct } from 'src/app/shared/types';
@@ -20,5 +21,9 @@ export class ProductsPageComponent implements OnInit {
     this.store.dispatch(getProducts());
   }
 
-  constructor (private store: Store) {}
+  public openProductModal() {
+    this.modalService.openModal();
+  }
+
+  constructor (private store: Store, private modalService: ModalService) {}
 }
