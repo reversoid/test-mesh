@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getProducts } from 'src/app/shared/NgRx/product.actions';
-import { selectIsLoading, selectProducts } from 'src/app/shared/NgRx/product.selectors';
+import { selectErrorMessage, selectIsLoading, selectProducts } from 'src/app/shared/NgRx/product.selectors';
 import { IProduct } from 'src/app/shared/types';
 
 @Component({
@@ -21,6 +21,7 @@ export class ProductsPageComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(selectProducts).subscribe(e => console.log('this is products', e));
+    this.store.select(selectErrorMessage).subscribe(e => console.log('this is error', e));
 
     this.store.dispatch(getProducts());
   }

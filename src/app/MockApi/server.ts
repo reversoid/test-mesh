@@ -17,6 +17,7 @@ export class BackendInterceptor implements HttpInterceptor {
   constructor(private storageService: StorageService) {}
 
   private _handleProductGET() {
+    return of(new HttpResponse({ status: 500 }));
     const products = this.storageService.getProducts();
     return of(new HttpResponse({ status: 200, body: { products } }));
   }

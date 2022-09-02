@@ -23,27 +23,10 @@ export const SUCCESS_ACTIONS = {
   ),
 };
 
-export const FAILURE_ACTIONS = {
-  createProducts: createAction(
-    '[Product API] createProductFailure',
-    props<{ message: string }>()
-  ),
-
-  getProducts: createAction(
-    '[Product API] getProductsFailure',
-    props<{ message: string }>()
-  ),
-
-  updateProduct: createAction(
-    '[Product API] updateProductFailure',
-    props<{ message: string }>()
-  ),
-
-  removeProduct: createAction(
-    '[Product API] removeProductFailure',
-    props<{ message: string }>()
-  ),
-};
+export const FAILURE_ACTION = createAction(
+  '[Product API] failureProductOperation',
+  props<{ message: string }>()
+);
 
 export const toggleIsLoading = createAction(
   '[Product API] toggleIsLoading',

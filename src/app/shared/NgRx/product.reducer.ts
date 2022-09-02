@@ -3,7 +3,7 @@ import { IProduct } from '../types';
 import {
   toggleIsLoading,
   SUCCESS_ACTIONS,
-  FAILURE_ACTIONS,
+  FAILURE_ACTION,
 } from './product.actions';
 
 export interface ProductState {
@@ -40,5 +40,8 @@ export const productReducer = createReducer(
   on(toggleIsLoading, (state, { to }) => {
     console.log(`hey isLoading is changed to ${to}`);
     return { ...state, isLoading: to };
-  })
+  }),
+  on(FAILURE_ACTION, (state, { message }) => {
+    return { ...state, errorMessage: message };
+  }),
 );
