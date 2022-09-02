@@ -40,7 +40,7 @@ export class ProductEffects {
           map((products) => {
             return SUCCESS_ACTIONS.getProducts({ products });
           }),
-          catchError(() => of(FAILURE_ACTION({message: 'hello world'}))),
+          catchError((error: string) => of(FAILURE_ACTION({message: error}))),
         );
       })
     );
